@@ -94,7 +94,43 @@ const movies = [
   },
 ];
 
+// Henter de HTML, vi skal arbejde med og gemmer dem i nogle variabler
 const moviesContainer = document.querySelector("#movies-container");
+const selectedCategory = document.querySelector("#category-select");
+const searchInput = document.querySelector("#gsearch");
+const form = document.querySelector("form");
+
+function filterMovies() {
+  const selectedValue = selectedCategory.value;
+  const searchTerm = searchInput.value.toLowerCase().trim();
+
+  let filteredMovies = movies;
+
+  if (selectedValue != "alle") {
+    filteredMovies = filteredMovies.filter((item) => {
+      return item.genre === selectedValue;
+    });
+  }
+
+  if (searchTerm != "") {
+    filteredMovies = filteredMovies.filter((item) => {
+      return item.titel.toLowerCase().includes(searchTerm);
+    });
+  }
+
+  displayMovies(filteredMovies);
+}
+
+//Sætter en lytter på variablen selectedCategory (dropdownmenu), som lytter på om værdien i menuen skifter
+selectedCategory.addEventListener("change", filterMovies);
+
+// Sætter en lytter på variablen searchInput, som lytter på når der sker ændringer i søgefeltet
+searchInput.addEventListener("input", filterMovies);
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  filterMovies();
+});
 
 function displayMovies(movieList) {
   const html = movieList

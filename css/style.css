@@ -36,3 +36,7 @@ h1 {
   justify-content: center;
   gap: 10px;
 }
+
+.form {
+  padding: 30px;
+}
